@@ -5,9 +5,17 @@
       <div class="login-card">
         <h1 class="login-title">ログイン</h1>
         <div class="form">
-          <input type="text" placeholder="メールアドレス" class="mail">
-          <input type="text" placeholder="パスワード" class="pass">
-          <button class="button"><NuxtLink to = "/home" class="login-nuxt">ログイン</NuxtLink></button>
+          <validation-observer ref="obs" v-slot="ObserverProps" class="observer">
+           <validation-provider v-slot="ProviderProps" rules="required" class="provider">
+            <input v-model="email" type="email" placeholder="メールアドレス" class="mail" name="メールアドレス">
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+           </validation-provider>
+           <validation-provider v-slot="ProviderProps" rules="required" class="provider">
+            <input v-model="password" type="password" placeholder="パスワード" class="pass" name="パスワード">
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+           </validation-provider>
+           <button @click="login" class="button"  :disabled="ObserverProps.invalid || !ObserverProps.validated">ログイン</button>
+         </validation-observer>
         </div>
       </div>
     </div>
@@ -15,8 +23,49 @@
 </template>
 
 <script>
+import firebase from '~/plugins/firebase'
 export default {
-
+  data() {
+    return {
+      email: null,
+      password: null,
+    }
+  },
+  methods: {
+    login() {
+      if (!this.email || !this.password) {
+        alert('メールアドレスまたはパスワードが入力されていません。')
+        return
+      }
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          alert('ログインが完了しました')
+          this.$router.push('/home')
+        })
+        .catch((error) => {
+          switch (error.code) {
+            case 'auth/invalid-email':
+              alert('メールアドレスの形式が違います。')
+              break
+            case 'auth/user-disabled':
+              alert('ユーザーが無効になっています。')
+              break
+            case 'auth/user-not-found':
+              alert('ユーザーが存在しません。')
+              break
+            case 'auth/wrong-password':
+              alert('パスワードが間違っております。')
+              break
+            default:
+              alert('エラーが起きました。しばらくしてから再度お試しください。')
+              break
+          }
+        })
+          this.$store.commit('login',this.email);
+    },
+  },
 }
 </script>
 
@@ -77,6 +126,7 @@ export default {
     color: white;
     border-radius: 10px;
     margin-top: 10px;
+    cursor: pointer;
   }
 
   .login-nuxt{

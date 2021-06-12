@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to = "/" class="nuxt"><img src="/img/home.png"></NuxtLink>
+  <img src="/img/home.png">
 </template>
 
 <style scoped>

@@ -2,7 +2,10 @@
   <div class="index-main">
     <div class="index-content">
       <div class="index-content_content">
-        <h1 class="index-title">Welcome to Share</h1>
+        <h1 class="index-title">Welcome to</h1>
+        <div class="shareimg">
+          <share></share>
+        </div>
         <div class="index-list">
           <ul>
             <li><NuxtLink to = "/register" class="nuxt">新規登録</NuxtLink></li>
@@ -27,7 +30,7 @@ export default {}
     justify-content: center;
     /* align-items: center; */
     height: 100vh;
-    /* background: black;  */
+    background: black; 
   }
 
   .index-content{
@@ -37,9 +40,16 @@ export default {}
 
 
   .index-title{
-    margin: 100px;
+    margin:100px;
+    text-align: center;
+    /* height: 100px; */
+    /* border: solid white; */
     font-size: 60px;
-    color: black;
+    color: white;
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        left: 60px;
     /* padding: 50px; */
   }
 
@@ -48,6 +58,12 @@ export default {}
     justify-content: center;
   }
 
+  .shareimg{
+    display: inline-block;
+    width: 30%;
+    /* border: white solid; */
+    margin-top: 30px;
+  }
 
   li{
     list-style: none;
@@ -58,7 +74,7 @@ export default {}
 
   .nuxt{
     text-decoration: none;
-    color: bulue;
+    color: white;
   }
 
 </style>

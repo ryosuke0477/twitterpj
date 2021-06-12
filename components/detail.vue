@@ -1,5 +1,5 @@
 <template>
-  <img src="/img/logout.png">
+  <img src="/img/detail.png">
 </template>
 
 <style scoped>
