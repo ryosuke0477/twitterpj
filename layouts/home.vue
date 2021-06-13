@@ -8,7 +8,7 @@
         <div class="homeimg">
           <homelogo></homelogo>
         </div>
-        <NuxtLink to = "/home" class="nuxt"><p class="home_p">ホーム</p></NuxtLink>
+        <NuxtLink to = "/home" class="nuxt"><p class="home_p" @click="load">ホーム</p></NuxtLink>
       </div>
       <div class="img-part">
         <div class="outimg">
@@ -24,9 +24,9 @@
         </validation-provider>
         <button class="button" @click="PostAction" :disabled="ObserverProps.invalid || !ObserverProps.validated">シェアする</button>
       </validation-observer>
-      <!-- <p>{{ message }}</p>
-      <p>{{ content }}</p>
-      <p>{{ user }}</p> -->
+      <!-- <p>{{ $store.state.login }}</p> -->
+      <!-- <p>{{ content }}</p> -->
+      <!-- <p>{{ user }}</p> -->
     </div>
     <div class="twitter-contet">
       <Nuxt />
@@ -39,8 +39,8 @@ import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
-      message: 'ログインができておりません',
-      username: this.$store.state.login,
+      message: [],
+      username: "",
       content:"",
       // user:firebase.auth().currentUser
       // user:firebase.auth().currentUser.email,
@@ -49,9 +49,12 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.message = user.email+"がログイン中です"
+        var user = firebase.auth().currentUser;
+        this.username = user.displayName;
+        this.$store.commit('getName',this.username)
+        // this.message = user.email+"がログイン中です"
         }
-    })
+    }),
     // this.getPost();
     this.$store.dispatch('getPost')
   },
@@ -65,9 +68,12 @@ export default {
           this.$router.replace('/')
         })
     },
+    load(){
+      this.$store.dispatch('getPost')
+    },
 
      PostAction(){
-        this.$store.dispatch('insertPost',{postname: this.$store.state.login.name, content: this.content})
+        this.$store.dispatch('insertPost',{postname: this.$store.state.login, content: this.content})
      },
     //  refresh(){
     //    this.$store.commit("refresh")
@@ -147,9 +153,12 @@ export default {
     color: white;
     border-radius: 10px;
     margin-top: 10px;
-    margin-left: auto;
+    margin-left: 130px;
     margin-right: 0px;
     cursor: pointer;
+  }
+  p{
+    color: white;
   }
 
 </style>

@@ -12,9 +12,6 @@
         <div class="crossimg" @click="del($store.state.show.data[0].id)">
           <cross></cross>
         </div>
-        <div class="detailimg">
-          <detail></detail>
-        </div>
       </div>
       <p class="postcontent">{{$store.state.show.data[0].content}}</p>
     </div>
@@ -31,7 +28,7 @@
     　　<textarea class="comment-input" cols="50" rows="2" v-model="comment" name="コメント"></textarea>
      　 <div class="error">{{ ProviderProps.errors[0] }}</div>
       </validation-provider>
-      <button class="button" @click="CommentAction" :disabled="ObserverProps.invalid || !ObserverProps.validated">コメント</button>
+      <button class="comment_button" @click="CommentAction" :disabled="ObserverProps.invalid || !ObserverProps.validated">コメント</button>
     </validation-observer>
   </div>
 </template>
@@ -128,7 +125,7 @@ export default {
     border-left: black;
   }
 
-    .button{
+  .comment_button{
     width: 20%;
     height: 30px;
     border: blue;
@@ -136,10 +133,11 @@ export default {
     color: white;
     border-radius: 10px;
     margin-top: 10px;
-    margin-left: auto;
+    margin-left: 650px;
     margin-right: 0px;
     cursor: pointer;
   }
+
   .Commentcontent{
     /* border: solid white 0.5px; */
     border-left: white solid 0.5px;

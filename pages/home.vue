@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h1 class="main-tilte">ホーム</h1>
-    <!-- <p>{{$store.state.show}}</p> -->
+    <!-- <p>{{$store.state.test}}</p> -->
     <div v-for="data in $store.state.datas" :key="data.id" class="postarea">
       <div class="postlogo">
         <p class="postname">{{data.postname}}</p>
@@ -9,7 +9,7 @@
           <heart></heart>
         </div>
         <div class="count">{{data.count}}</div>
-        <!-- <div class="count">{{data.id}}</div> -->
+        <div class="count">{{data.id}}</div>
         <div class="crossimg" @click="del(data.id)">
           <cross></cross>
         </div>
@@ -25,10 +25,16 @@
 <script>
 export default {
   layout:'home',
+  // created() {
+  //   this.$store.dispatch('getIf')
+  // },
   methods: {
      count(id){
         this.$store.dispatch('getCount',id)
     },
+    //  cut(id){
+    //     this.$store.dispatch('CutCount',id)
+    // },
       del(id){
         this.$store.dispatch('postDel',id)
     },

@@ -47,6 +47,10 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((data) => {
           data.user.sendEmailVerification().then(() => {
+            var user = firebase.auth().currentUser;
+            user.updateProfile({
+              displayName: this.name,
+            })
             this.$router.replace('/confirm')
           })
         })
@@ -66,7 +70,7 @@ export default {
               break
           }
         })
-       this.$store.commit('add',{name: this.name, mail: this.email});
+      //  this.$store.commit('add',{name: this.name, mail: this.email});
     },
   },
 }
